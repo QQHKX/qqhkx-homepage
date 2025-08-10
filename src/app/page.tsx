@@ -207,7 +207,7 @@ export default function Home() {
               className="mb-6"
             >
               <p className="text-lg md:text-xl text-white/80 leading-relaxed">
-                 <TypingText text={profile.motto} speed={120} />
+                 <TypingText text={profile.motto} speed={120} delay={1500} />
                </p>
             </motion.div>
             
@@ -374,22 +374,42 @@ export default function Home() {
 }
 
 /**
- * TypingText 组件
- * 用途：实现打字机效果的文本动画，带有光标闪烁
- * 输入：text（要显示的文本）、speed（打字速度，毫秒）
- * 返回：带有打字机效果和光标闪烁的文本 JSX
+ * 打字机效果组件
+ * @param text - 要显示的文本
+ * @param speed - 打字速度（毫秒）
+ * @param delay - 开始打字前的延迟时间（毫秒）
  */
-function TypingText({ text, speed = 60 }: { text: string; speed?: number }) {
+function TypingText({ text, speed = 80, delay = 0 }: { text: string; speed?: number; delay?: number }) {
   const [index, setIndex] = useState(0);
   const [showCursor, setShowCursor] = useState(true);
+  const [started, setStarted] = useState(false);
+  
+  // 处理初始延迟
+  useEffect(() => {
+    if (delay > 0) {
+      const startTimer = setTimeout(() => {
+        setStarted(true);
+      }, delay);
+      return () => clearTimeout(startTimer);
+    } else {
+      setStarted(true);
+    }
+  }, [delay]);
   
   useEffect(() => {
-    if (index >= text.length) return;
-    const timer = setInterval(() => {
+    if (!started || index >= text.length) return;
+    
+    // 检查当前字符是否为逗号，如果是则增加停顿时间
+     const currentChar = text[index - 1];
+     const isComma = currentChar === '，' || currentChar === ',';
+     const typingDelay = isComma ? speed * 5 : speed; // 逗号处停顿5倍时间
+    
+    const timer = setTimeout(() => {
       setIndex((i) => (i < text.length ? i + 1 : i));
-    }, speed);
-    return () => clearInterval(timer);
-  }, [index, text, speed]);
+    }, typingDelay);
+    
+    return () => clearTimeout(timer);
+  }, [started, index, text, speed]);
 
   // 光标闪烁效果
   useEffect(() => {
