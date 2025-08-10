@@ -1,4 +1,4 @@
-# QQHKX 个人主页
+# 个人主页 | homepage
 
 [English](./README.en.md) | 中文
 
