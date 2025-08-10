@@ -21,10 +21,13 @@ const pacifico = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "QQHKX | 个人主页",
-  description: "QQHKX 的个人主页与项目展示",
-  metadataBase: new URL("https://qqhkx.com"),
-  icons: { icon: "/favicon.ico" },
+  title: process.env.NEXT_PUBLIC_SITE_TITLE || "QQHKX | 个人主页",
+  description: process.env.NEXT_PUBLIC_SITE_DESCRIPTION || "QQHKX 的个人主页与项目展示",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://qqhkx.com"),
+  icons: { 
+    icon: process.env.NEXT_PUBLIC_FAVICON_PATH || "/favicon.ico",
+    apple: process.env.NEXT_PUBLIC_APPLE_ICON_PATH || "/favicon.ico",
+  },
 };
 
 /**

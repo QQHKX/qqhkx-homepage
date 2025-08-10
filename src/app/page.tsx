@@ -4,6 +4,7 @@ import Link from "next/link";
 import { profile } from "@/data/profile";
 import { useMemo, useEffect, useState } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import SocialIcon from "@/components/SocialIcon";
 
 /**
  * Home 页面组件
@@ -82,7 +83,7 @@ export default function Home() {
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="relative min-h-dvh mx-auto max-w-6xl px-6 flex items-center py-16 md:py-24"
+            className="relative min-h-dvh mx-auto max-w-6xl px-6 flex items-center py-16 md:py-24 select-none"
           >
             {/* 背景装饰（视差） */}
             <motion.div 
@@ -270,10 +271,15 @@ export default function Home() {
                 >
                   <Link
                     href={s.url}
-                    className="relative card-skeu texture-spot text-sm md:text-base lg:text-lg px-4 py-2 md:px-5 md:py-2.5 lg:px-6 lg:py-3 rounded-[20px] hover:opacity-95 transition"
+                    className="relative card-skeu texture-spot flex items-center gap-2 text-sm md:text-base lg:text-lg px-4 py-2 md:px-5 md:py-2.5 lg:px-6 lg:py-3 rounded-[20px] hover:opacity-95 transition group"
                     target="_blank"
                   >
-                    {s.name}
+                    <SocialIcon 
+                      name={s.name} 
+                      size={20} 
+                      className="group-hover:scale-110 transition-transform duration-200" 
+                    />
+                    <span className="hidden sm:inline">{s.name}</span>
                   </Link>
                 </motion.div>
               ))}
@@ -360,8 +366,12 @@ export default function Home() {
           </div>
           <div className="flex items-center gap-3">
             {profile.socials.map((s) => (
-              <Link key={s.name} href={s.url} className="hover:text-white" target="_blank">
-                {s.name}
+              <Link key={s.name} href={s.url} className="hover:text-white hover:scale-110 transition-all duration-200" target="_blank">
+                <SocialIcon 
+                  name={s.name} 
+                  size={18} 
+                  className="opacity-70 hover:opacity-100 transition-opacity duration-200" 
+                />
               </Link>
             ))}
           </div>

@@ -74,7 +74,6 @@ export const profile: Profile = {
   role: process.env.NEXT_PUBLIC_PROFILE_ROLE || "高中生",
   avatar: process.env.NEXT_PUBLIC_PROFILE_AVATAR || "https://image.qqhkx.com/Profile%20picture.jpg",
   socials: parseEnvJSON<SocialLink[]>(process.env.NEXT_PUBLIC_SOCIALS, [
-    { name: "Website", url: "https://qqhkx.com/" },
     { name: "Blog", url: "https://blog.qqhkx.com/" },
     { name: "Bilibili", url: "https://space.bilibili.com/646242813" },
     { name: "GitHub", url: "https://github.com/qqhkx" },

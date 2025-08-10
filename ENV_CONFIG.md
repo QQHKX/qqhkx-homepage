@@ -18,7 +18,17 @@
 
 ## 配置项说明
 
-### 基本信息
+### 网站基本信息
+
+| 变量名 | 说明 | 示例 |
+|--------|------|------|
+| `NEXT_PUBLIC_SITE_TITLE` | 网站标题 | `QQHKX | 个人主页` |
+| `NEXT_PUBLIC_SITE_DESCRIPTION` | 网站描述 | `QQHKX 的个人主页与项目展示` |
+| `NEXT_PUBLIC_SITE_URL` | 网站URL | `https://qqhkx.com` |
+| `NEXT_PUBLIC_FAVICON_PATH` | 网站图标路径 | `/favicon.ico` |
+| `NEXT_PUBLIC_APPLE_ICON_PATH` | Apple设备图标路径 | `/apple-touch-icon.png` |
+
+### 个人信息
 
 | 变量名 | 说明 | 示例 |
 |--------|------|------|
