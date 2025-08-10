@@ -43,6 +43,7 @@ next-env.d.ts
 # IDE and editor files
 .vscode/
 .idea/
+.trae/
 *.swp
 *.swo
 *~
