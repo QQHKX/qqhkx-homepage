@@ -39,3 +39,63 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files (additional)
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Additional logs
+logs
+lerna-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage (additional)
+*.lcov
+.nyc_output
+
+# Dependency directories (additional)
+jspm_packages/
+
+# Cache directories
+.npm
+.eslintcache
+.stylelintcache
+.cache
+.parcel-cache
+
+# Build cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional files
+.node_repl_history
+*.tgz
+.yarn-integrity
+
+# Additional build outputs
+.nuxt
+dist
+.out
+.storybook-out
+
+# Temporary folders
+tmp/
+temp/
