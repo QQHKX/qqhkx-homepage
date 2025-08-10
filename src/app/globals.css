@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0b0b0f;
+  /* 深色基底 */
+  --foreground: #e7e9ee;
+  --accent: #7c3aed;
+  /* 紫色强调 */
+  --accent-2: #06b6d4;
+  /* 青色强调 */
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --font-sans: var(--font-geist-sans);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --background: #f7f7fb;
+    --foreground: #121316;
+  }
+}
+
+body {
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.2) 70%, rgba(0, 0, 0, 0.35)),
+    radial-gradient(1600px 800px at 10% -10%, color(display-p3 0.47 0.2 1 / 0.25), transparent 70%),
+    radial-gradient(1400px 700px at 90% 10%, color(display-p3 0.1 0.85 0.85 / 0.2), transparent 70%),
+    radial-gradient(1200px 600px at 50% 100%, color(display-p3 0.3 0.3 0.6 / 0.2), transparent 70%),
+    var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+/* 拟物卡片（皮层质感 + 柔光 + 立体阴影） */
+.card-skeu {
+  background:
+    linear-gradient(180deg, color-mix(in oklab, white 6%, transparent) 0%, transparent 60%),
+    linear-gradient(0deg, color-mix(in oklab, white 2%, transparent) 0%, transparent 100%),
+    color-mix(in oklab, var(--background) 90%, white 10%);
+  border-radius: 20px;
+  border: 1px solid color-mix(in oklab, white 12%, transparent);
+  box-shadow:
+    0 20px 40px -20px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+/* 高光边缘（轻微的顶边高光） */
+.card-skeu::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 30%);
+  pointer-events: none;
+}
+
+/* 光斑纹理 */
+.texture-spot {
+  background:
+    radial-gradient(80px 80px at 20% 10%, rgba(255, 255, 255, 0.08), transparent 60%),
+    radial-gradient(120px 80px at 80% 20%, rgba(255, 255, 255, 0.06), transparent 60%);
+}
+
+/* 标题使用手写字体（Pacifico，本地字体） */
+h1 {
+  font-family: var(--font-pacifico), var(--font-geist-sans), system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+}
+
+/* 删除霓虹文字样式（不再使用） */
+/* .neon-text {
+  text-shadow: 0 0 6px color-mix(in oklab, var(--accent) 50%, white 50%),
+               0 0 12px color-mix(in oklab, var(--accent-2) 40%, white 60%);
+}
+
+/* 隐藏全局滚动条（保留滚动功能） */
+html,
+body {
+  -ms-overflow-style: none;
+  /* IE/Edge 旧版 */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+  /* Chrome/Safari/Edge(Chromium) */
+}
+
+/* 可选：局部隐藏滚动条的工具类 */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}

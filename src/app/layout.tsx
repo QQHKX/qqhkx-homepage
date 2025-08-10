@@ -1,0 +1,50 @@
+import type { Metadata } from "next";
+import { Geist } from "next/font/google";
+import localFont from "next/font/local";
+import "./globals.css";
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+/**
+ * 手写字体（用于标题等特殊元素）
+ * 来源：public/font/Pacifico-Regular-all.ttf，本地字体，避免外部请求。
+ * 暴露变量：--font-pacifico
+ */
+const pacifico = localFont({
+  src: "../../public/font/Pacifico-Regular-all.ttf",
+  variable: "--font-pacifico",
+  style: "normal",
+  display: "swap",
+});
+
+export const metadata: Metadata = {
+  title: "QQHKX | 个人主页",
+  description: "QQHKX 的个人主页与项目展示",
+  metadataBase: new URL("https://qqhkx.com"),
+  icons: { icon: "/favicon.ico" },
+};
+
+/**
+ * 根布局组件
+ * 用途：设置页面的全局样式、字体变量和元数据。
+ * 参数：children - 页面内容
+ * 返回：HTML 根结构
+ */
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="zh-CN">
+      <body
+        className={`${geistSans.variable} ${pacifico.variable} antialiased bg-background text-foreground`}
+      >
+        {children}
+      </body>
+    </html>
+  );
+}
