@@ -60,7 +60,7 @@
 | `NEXT_PUBLIC_PROFILE_AVATAR` | 头像链接 | `https://example.com/avatar.jpg` |
 | `NEXT_PUBLIC_SOCIALS` | 社交链接 | JSON 格式数组 |
 
-📖 **完整配置指南**：[ENV_CONFIG.md](./ENV_CONFIG.md)
+📖 **详细配置指南**：[CONFIG_GUIDE.md](./CONFIG_GUIDE.md) | [ENV_CONFIG.md](./ENV_CONFIG.md)
 
 ### 配置技巧
 
@@ -87,6 +87,8 @@
    cp .env.example .env.local
    # 编辑 .env.local 文件，填入你的个人信息
    ```
+   
+   💡 **首次配置？** 查看 [配置指南](./CONFIG_GUIDE.md) 获取详细说明和示例
 
 4. **启动开发服务器**
    ```bash

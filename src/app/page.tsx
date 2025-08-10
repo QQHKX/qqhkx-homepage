@@ -37,7 +37,7 @@ export default function Home() {
         title: "关于我",
         content: (
           <p className="text-white/80 leading-7">
-            我是来自{profile.location}的{profile.role}，热爱前端与计算机科学，熟悉 React/Vue 等前端框架，也在持续学习 AI 与工程化相关内容。
+            {profile.description}
           </p>
         ),
       },
@@ -161,7 +161,7 @@ export default function Home() {
           >
             <Image
               src={profile.avatar}
-              alt="QQHKX avatar"
+              alt={profile.avatarAlt}
               fill
               sizes="(max-width: 768px) 128px, 160px"
               className="object-cover"
@@ -185,8 +185,8 @@ export default function Home() {
               className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-4"
               style={{ letterSpacing: '0.1em' }}
             >
-              <span>qqhkx</span>
-              <span className="text-3xl md:text-4xl lg:text-5xl font-light" style={{ letterSpacing: '-0.02em' }}>.com</span>
+              <span>{profile.siteName}</span>
+              <span className="text-3xl md:text-4xl lg:text-5xl font-light" style={{ letterSpacing: '-0.02em' }}>{profile.siteDomain}</span>
             </motion.h1>
 
             {/* 座右铭区域 */}

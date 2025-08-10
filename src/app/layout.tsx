@@ -21,9 +21,9 @@ const pacifico = localFont({
 });
 
 export const metadata: Metadata = {
-  title: process.env.NEXT_PUBLIC_SITE_TITLE || "QQHKX | 个人主页",
-  description: process.env.NEXT_PUBLIC_SITE_DESCRIPTION || "QQHKX 的个人主页与项目展示",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://qqhkx.com"),
+  title: process.env.NEXT_PUBLIC_SITE_TITLE || "",
+  description: process.env.NEXT_PUBLIC_SITE_DESCRIPTION || "",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
   icons: { 
     icon: process.env.NEXT_PUBLIC_FAVICON_PATH || "/favicon.ico",
     apple: process.env.NEXT_PUBLIC_APPLE_ICON_PATH || "/favicon.ico",

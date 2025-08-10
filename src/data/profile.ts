@@ -32,6 +32,8 @@ export type Profile = {
   role: string;
   /** 头像链接（远程地址） */
   avatar: string;
+  /** 个人简介描述 */
+  description: string;
   /** 社交链接集合 */
   socials: SocialLink[];
   /** 编程语言 */
@@ -42,6 +44,14 @@ export type Profile = {
   projects: Project[];
   /** 备案号 */
   icpNumber?: string;
+  /** 网站名称 */
+  siteName: string;
+  /** 网站域名后缀 */
+  siteDomain: string;
+  /** 头像alt文本 */
+  avatarAlt: string;
+  /** 图片域名 */
+  imageHostname: string;
 };
 
 /**
@@ -71,99 +81,36 @@ function parseEnvArray(envVar: string | undefined, fallback: string[]): string[]
   return envVar.split(',').map(item => item.trim()).filter(Boolean);
 }
 
-export const profile: Profile = {
-  name: process.env.NEXT_PUBLIC_PROFILE_NAME || "qqhkx.com",
-  motto: process.env.NEXT_PUBLIC_PROFILE_MOTTO || "心有阳光，万物可爱",
-  location: process.env.NEXT_PUBLIC_PROFILE_LOCATION || "中国·成都",
-  role: process.env.NEXT_PUBLIC_PROFILE_ROLE || "高中生",
-  avatar: process.env.NEXT_PUBLIC_PROFILE_AVATAR || "https://image.qqhkx.com/Profile%20picture.jpg",
+// 创建基础配置对象
+const baseProfile = {
+  name: process.env.NEXT_PUBLIC_PROFILE_NAME || "",
+  motto: process.env.NEXT_PUBLIC_PROFILE_MOTTO || "",
+  location: process.env.NEXT_PUBLIC_PROFILE_LOCATION || "",
+  role: process.env.NEXT_PUBLIC_PROFILE_ROLE || "",
+  avatar: process.env.NEXT_PUBLIC_PROFILE_AVATAR || "",
   icpNumber: process.env.NEXT_PUBLIC_ICP_NUMBER || undefined,
-  socials: parseEnvJSON<SocialLink[]>(process.env.NEXT_PUBLIC_SOCIALS, [
-    { name: "Blog", url: "https://blog.qqhkx.com/" },
-    { name: "Bilibili", url: "https://space.bilibili.com/646242813" },
-    { name: "GitHub", url: "https://github.com/qqhkx" },
-    { name: "QQ", url: "https://qm.qq.com/cgi-bin/qm/qr?k=smcjh3B6c0qwT9-elqnsDiNmHW0KW6lQ" },
-  ]),
-  languages: parseEnvArray(process.env.NEXT_PUBLIC_LANGUAGES, ["Python", "C++", "JavaScript", "HTML5", "CSS3"]),
-  frameworksAndTools: parseEnvArray(process.env.NEXT_PUBLIC_FRAMEWORKS_AND_TOOLS, [
-    "Vue.js",
-    "React",
-    "Node.js",
-    "Python",
-    "Docker",
-    "Git",
-    "GitHub",
-    "Photoshop",
-    "Apifox",
-    "Postman",
-    "VS Code",
-  ]),
-  projects: parseEnvJSON<Project[]>(process.env.NEXT_PUBLIC_PROJECTS, [
-    { 
-      title: "Baidu-Web-Disk-Hidden-Files-One-Key-Clean", 
-      url: "https://github.com/QQHKX/Baidu-Web-Disk-Hidden-Files-One-Key-Clean", 
-      description: "百度网盘隐藏文件一键清理工具",
-      tags: ["Python", "工具", "自动化"]
-    },
-    { 
-      title: "md-article-little-assistant", 
-      url: "https://github.com/QQHKX/md-article-little-assistant", 
-      description: "Markdown文章小助手",
-      tags: ["Markdown", "工具", "文档"]
-    },
-    { 
-      title: "mailSender", 
-      url: "https://github.com/QQHKX/mailSender", 
-      description: "基于resend-api的邮件发送工具",
-      tags: ["Node.js", "API", "邮件"]
-    },
-    { 
-      title: "classClock", 
-      url: "https://github.com/QQHKX/classClock", 
-      description: "沉浸式时钟应用",
-      tags: ["JavaScript", "时钟", "UI"]
-    },
-    { 
-      title: "Immersive-clock", 
-      url: "https://github.com/QQHKX/Immersive-clock", 
-      description: "沉浸式时钟-React重构版本",
-      tags: ["React", "时钟", "重构"]
-    },
-    { 
-      title: "school-study-supervision", 
-      url: "https://github.com/QQHKX/school-study-supervision", 
-      description: "学校学习监督系统",
-      tags: ["Web", "教育", "管理"]
-    },
-    { 
-      title: "Zombie-fight", 
-      url: "https://github.com/QQHKX/Zombie-fight", 
-      description: "僵尸大战游戏",
-      tags: ["游戏", "娱乐", "动作"]
-    },
-    { 
-      title: "Fight-against-COVID-19", 
-      url: "https://github.com/QQHKX/Fight-against-COVID-19", 
-      description: "抗击新冠病毒主题游戏",
-      tags: ["游戏", "主题", "教育"]
-    },
-    { 
-      title: "QQHKX-Prompt", 
-      url: "https://github.com/QQHKX/QQHKX-Prompt", 
-      description: "个人AI提示词集合",
-      tags: ["AI", "提示词", "工具"]
-    },
-    { 
-      title: "llm-api-manager", 
-      url: "https://github.com/QQHKX/llm-api-manager", 
-      description: "大语言模型API管理工具",
-      tags: ["AI", "API", "管理"]
-    },
-    { 
-      title: "oneapi_test", 
-      url: "https://github.com/QQHKX/oneapi_test", 
-      description: "OneAPI测试项目",
-      tags: ["API", "测试", "工具"]
-    },
-  ]),
+  socials: parseEnvJSON<SocialLink[]>(process.env.NEXT_PUBLIC_SOCIALS, []),
+  languages: parseEnvArray(process.env.NEXT_PUBLIC_LANGUAGES, []),
+  frameworksAndTools: parseEnvArray(process.env.NEXT_PUBLIC_FRAMEWORKS_AND_TOOLS, []),
+  projects: parseEnvJSON<Project[]>(process.env.NEXT_PUBLIC_PROJECTS, []),
+  siteName: process.env.NEXT_PUBLIC_SITE_NAME || "",
+  siteDomain: process.env.NEXT_PUBLIC_SITE_DOMAIN || "",
+  imageHostname: process.env.NEXT_PUBLIC_IMAGE_HOSTNAME || "",
+};
+
+// 处理头像alt文本的模板变量替换
+const rawAvatarAlt = process.env.NEXT_PUBLIC_PROFILE_AVATAR_ALT || "";
+const processedAvatarAlt = rawAvatarAlt
+  .replace(/\{name\}/g, baseProfile.name);
+
+// 处理描述中的模板变量替换
+const rawDescription = process.env.NEXT_PUBLIC_PROFILE_DESCRIPTION || "";
+const processedDescription = rawDescription
+  .replace(/\{location\}/g, baseProfile.location)
+  .replace(/\{role\}/g, baseProfile.role);
+
+export const profile: Profile = {
+  ...baseProfile,
+  description: processedDescription,
+  avatarAlt: processedAvatarAlt,
 };
