@@ -21,15 +21,8 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, []);
 
-  const groups = useMemo(() => {
-    const map = new Map<string, typeof profile.projects>();
-    for (const p of profile.projects) {
-      const arr = map.get(p.category) ?? [];
-      arr.push(p);
-      map.set(p.category, arr);
-    }
-    return Array.from(map.entries());
-  }, []);
+  // 项目数据直接使用，不再分组
+  const projects = profile.projects;
 
   // 视差滚动：背景轻微上移，营造空间感
   const { scrollY } = useScroll();
@@ -327,52 +320,146 @@ export default function Home() {
 
       {/* 项目网格 */}
       <section className="mx-auto max-w-6xl px-6 pb-20">
-        <h2 className="text-2xl font-semibold mb-6">精选项目</h2>
+        <motion.div
+          initial={{ y: 30, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-white via-white/90 to-white/80 bg-clip-text text-transparent">
+            精选项目
+          </h2>
+          <p className="text-white/60 text-lg max-w-2xl mx-auto">
+            探索我的开源项目，涵盖实用工具、Web应用、游戏开发等多个领域
+          </p>
+        </motion.div>
+        
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {groups.map(([category, items], idx) => (
+          {projects.map((project, idx) => (
             <motion.div
-              key={category}
-              initial={{ scale: 0.96, opacity: 0 }}
-              whileInView={{ scale: 1, opacity: 1 }}
+              key={project.title}
+              initial={{ scale: 0.9, opacity: 0, y: 40 }}
+              whileInView={{ scale: 1, opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
-              transition={{ type: "spring", stiffness: 140, damping: 20, delay: idx * 0.03 }}
-              className="relative card-skeu texture-spot p-5"
+              transition={{ 
+                type: "spring", 
+                stiffness: 120, 
+                damping: 20, 
+                delay: idx * 0.1 
+              }}
+              whileHover={{ 
+                scale: 1.02,
+                transition: { duration: 0.2 }
+              }}
+              className="group relative card-skeu texture-spot p-6 overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-300"
             >
-              <div className="mb-3 text-sm text-white/70">{category}</div>
-              <ul className="space-y-2">
-                {items.map((p, i) => (
-                  <motion.li key={p.title} initial={{ x: -8, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.03 }}>
-                    <Link href={p.url} className="group inline-flex items-center gap-2 hover:underline" target="_blank">
-                      <span className="font-medium group-hover:text-accent">{p.title}</span>
-                      <svg className="size-4 text-white/60 group-hover:text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M7 17L17 7" />
-                        <path d="M8 7h9v9" />
-                      </svg>
-                    </Link>
-                  </motion.li>
-                ))}
-              </ul>
+              {/* 背景渐变效果 */}
+              <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              
+              {/* 项目内容 */}
+              <div className="relative z-10">
+                <Link 
+                  href={project.url} 
+                  className="block" 
+                  target="_blank"
+                >
+                  {/* 项目标题 */}
+                  <div className="flex items-start justify-between gap-3 mb-3">
+                    <h3 className="font-semibold text-white/90 group-hover:text-white transition-colors duration-200 text-lg leading-tight">
+                      {project.title}
+                    </h3>
+                    <div className="flex-shrink-0 mt-1">
+                      <div className="w-8 h-8 rounded-full bg-white/10 group-hover:bg-white/20 flex items-center justify-center transition-colors duration-200">
+                        <svg className="w-4 h-4 text-white/60 group-hover:text-white/80 transition-colors duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <path d="M7 17L17 7" />
+                          <path d="M8 7h9v9" />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* 项目描述 */}
+                  <p className="text-white/70 text-sm leading-relaxed mb-4 group-hover:text-white/80 transition-colors duration-200">
+                    {project.description}
+                  </p>
+                  
+                  {/* 项目标签 */}
+                  <div className="flex flex-wrap gap-2 mb-3">
+                    {project.tags.map((tag) => (
+                      <span 
+                        key={tag} 
+                        className="px-2.5 py-1 text-xs rounded-full bg-white/10 border border-white/20 text-white/80 backdrop-blur-sm transition-all duration-200 hover:bg-white/15 hover:border-white/30 hover:text-white/90"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                  
+                  {/* 项目来源标识 */}
+                  <div className="text-xs text-white/50">
+                    开源项目 · GitHub
+                  </div>
+                </Link>
+              </div>
             </motion.div>
           ))}
         </div>
+        
+        {/* 查看更多按钮 */}
+        <motion.div
+          initial={{ y: 30, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
+          className="text-center mt-12"
+        >
+          <Link
+            href="https://github.com/QQHKX"
+            target="_blank"
+            className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-white/20 backdrop-blur-sm hover:from-blue-500/30 hover:to-purple-500/30 hover:border-white/30 transition-all duration-300 group"
+          >
+            <span className="text-white/90 font-medium">查看更多项目</span>
+            <svg className="w-5 h-5 text-white/60 group-hover:text-white/80 group-hover:translate-x-1 transition-all duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M5 12h14" />
+              <path d="M12 5l7 7-7 7" />
+            </svg>
+          </Link>
+        </motion.div>
       </section>
 
       {/* 联系方式/页脚 */}
       <footer className="border-t border-white/10">
-        <div className="mx-auto max-w-6xl px-6 py-10 text-sm text-white/70 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div>
-            © {new Date().getFullYear()} {profile.name}. All rights reserved.
-          </div>
-          <div className="flex items-center gap-3">
-            {profile.socials.map((s) => (
-              <Link key={s.name} href={s.url} className="hover:text-white hover:scale-110 transition-all duration-200" target="_blank">
-                <SocialIcon 
-                  name={s.name} 
-                  size={18} 
-                  className="opacity-70 hover:opacity-100 transition-opacity duration-200" 
-                />
-              </Link>
-            ))}
+        <div className="mx-auto max-w-6xl px-6 py-10 text-sm text-white/70">
+          {/* 主要页脚内容 */}
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-4">
+            <div className="flex flex-col items-center md:items-start gap-2">
+              <div>
+                © {new Date().getFullYear()} {profile.name}. All rights reserved.
+              </div>
+              {profile.icpNumber && (
+                <div className="text-xs text-white/50">
+                  <Link 
+                    href="https://beian.miit.gov.cn/" 
+                    target="_blank" 
+                    className="hover:text-white/70 transition-colors duration-200"
+                  >
+                    {profile.icpNumber}
+                  </Link>
+                </div>
+              )}
+            </div>
+            <div className="flex items-center gap-3">
+              {profile.socials.map((s) => (
+                <Link key={s.name} href={s.url} className="hover:text-white hover:scale-110 transition-all duration-200" target="_blank">
+                  <SocialIcon 
+                    name={s.name} 
+                    size={18} 
+                    className="opacity-70 hover:opacity-100 transition-opacity duration-200" 
+                  />
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </footer>

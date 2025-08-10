@@ -15,8 +15,10 @@ export type Project = {
   title: string;
   /** 项目链接（GitHub 或外链） */
   url: string;
-  /** 项目类型或分类，用于在 UI 上打标签 */
-  category: string;
+  /** 项目简要描述 */
+  description: string;
+  /** 项目标签数组，用于标识技术栈或特性 */
+  tags: string[];
 };
 
 export type Profile = {
@@ -38,6 +40,8 @@ export type Profile = {
   frameworksAndTools: string[];
   /** 个人项目 */
   projects: Project[];
+  /** 备案号 */
+  icpNumber?: string;
 };
 
 /**
@@ -73,6 +77,7 @@ export const profile: Profile = {
   location: process.env.NEXT_PUBLIC_PROFILE_LOCATION || "中国·成都",
   role: process.env.NEXT_PUBLIC_PROFILE_ROLE || "高中生",
   avatar: process.env.NEXT_PUBLIC_PROFILE_AVATAR || "https://image.qqhkx.com/Profile%20picture.jpg",
+  icpNumber: process.env.NEXT_PUBLIC_ICP_NUMBER || undefined,
   socials: parseEnvJSON<SocialLink[]>(process.env.NEXT_PUBLIC_SOCIALS, [
     { name: "Blog", url: "https://blog.qqhkx.com/" },
     { name: "Bilibili", url: "https://space.bilibili.com/646242813" },
@@ -94,16 +99,71 @@ export const profile: Profile = {
     "VS Code",
   ]),
   projects: parseEnvJSON<Project[]>(process.env.NEXT_PUBLIC_PROJECTS, [
-    { title: "Baidu-Web-Disk-Hidden-Files-One-Key-Clean", url: "https://github.com/QQHKX/Baidu-Web-Disk-Hidden-Files-One-Key-Clean", category: "实用工具" },
-    { title: "md-article-little-assistant", url: "https://github.com/QQHKX/md-article-little-assistant", category: "实用工具" },
-    { title: "mailSender", url: "https://github.com/QQHKX/mailSender", category: "实用工具" },
-    { title: "classClock", url: "https://github.com/QQHKX/classClock", category: "时钟应用" },
-    { title: "Immersive-clock", url: "https://github.com/QQHKX/Immersive-clock", category: "时钟应用" },
-    { title: "school-study-supervision", url: "https://github.com/QQHKX/school-study-supervision", category: "Web 应用" },
-    { title: "Zombie-fight", url: "https://github.com/QQHKX/Zombie-fight", category: "游戏" },
-    { title: "Fight-against-COVID-19", url: "https://github.com/QQHKX/Fight-against-COVID-19", category: "游戏" },
-    { title: "QQHKX-Prompt", url: "https://github.com/QQHKX/QQHKX-Prompt", category: "AI/工具" },
-    { title: "llm-api-manager", url: "https://github.com/QQHKX/llm-api-manager", category: "AI/工具" },
-    { title: "oneapi_test", url: "https://github.com/QQHKX/oneapi_test", category: "AI/工具" },
+    { 
+      title: "Baidu-Web-Disk-Hidden-Files-One-Key-Clean", 
+      url: "https://github.com/QQHKX/Baidu-Web-Disk-Hidden-Files-One-Key-Clean", 
+      description: "百度网盘隐藏文件一键清理工具",
+      tags: ["Python", "工具", "自动化"]
+    },
+    { 
+      title: "md-article-little-assistant", 
+      url: "https://github.com/QQHKX/md-article-little-assistant", 
+      description: "Markdown文章小助手",
+      tags: ["Markdown", "工具", "文档"]
+    },
+    { 
+      title: "mailSender", 
+      url: "https://github.com/QQHKX/mailSender", 
+      description: "基于resend-api的邮件发送工具",
+      tags: ["Node.js", "API", "邮件"]
+    },
+    { 
+      title: "classClock", 
+      url: "https://github.com/QQHKX/classClock", 
+      description: "沉浸式时钟应用",
+      tags: ["JavaScript", "时钟", "UI"]
+    },
+    { 
+      title: "Immersive-clock", 
+      url: "https://github.com/QQHKX/Immersive-clock", 
+      description: "沉浸式时钟-React重构版本",
+      tags: ["React", "时钟", "重构"]
+    },
+    { 
+      title: "school-study-supervision", 
+      url: "https://github.com/QQHKX/school-study-supervision", 
+      description: "学校学习监督系统",
+      tags: ["Web", "教育", "管理"]
+    },
+    { 
+      title: "Zombie-fight", 
+      url: "https://github.com/QQHKX/Zombie-fight", 
+      description: "僵尸大战游戏",
+      tags: ["游戏", "娱乐", "动作"]
+    },
+    { 
+      title: "Fight-against-COVID-19", 
+      url: "https://github.com/QQHKX/Fight-against-COVID-19", 
+      description: "抗击新冠病毒主题游戏",
+      tags: ["游戏", "主题", "教育"]
+    },
+    { 
+      title: "QQHKX-Prompt", 
+      url: "https://github.com/QQHKX/QQHKX-Prompt", 
+      description: "个人AI提示词集合",
+      tags: ["AI", "提示词", "工具"]
+    },
+    { 
+      title: "llm-api-manager", 
+      url: "https://github.com/QQHKX/llm-api-manager", 
+      description: "大语言模型API管理工具",
+      tags: ["AI", "API", "管理"]
+    },
+    { 
+      title: "oneapi_test", 
+      url: "https://github.com/QQHKX/oneapi_test", 
+      description: "OneAPI测试项目",
+      tags: ["API", "测试", "工具"]
+    },
   ]),
 };
