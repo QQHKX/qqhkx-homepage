@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
 :root {
+  /* 强制统一为深色方案，避免随系统浅/深模式变化 */
+  color-scheme: dark;
   --background: #0b0b0f;
   /* 深色基底 */
   --foreground: #e7e9ee;
@@ -18,12 +20,15 @@
   --font-sans: var(--font-geist-sans);
 }
 
+/* 统一视觉方案：禁用随系统浅色模式的颜色覆写，确保浅/深模式视觉一致性 */
+/*
 @media (prefers-color-scheme: light) {
   :root {
     --background: #f7f7fb;
     --foreground: #121316;
   }
 }
+*/
 
 body {
   background:
